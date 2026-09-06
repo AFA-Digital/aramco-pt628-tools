@@ -29,6 +29,25 @@
   header .sub{color:#556677;font-size:14px;}
   .aramco-logo{height:32px;width:auto;flex-shrink:0;background:none;border:none;border-radius:0;}
   .intro{padding:20px 32px;border-bottom:1px solid var(--line);background:#fbf6e8;font-size:14.5px;line-height:1.55;}
+  .welcome{padding:26px 32px 30px;border-bottom:1px solid var(--line);background:#fff;}
+  .welcome h2{font-size:20px;margin-bottom:10px;}
+  .welcome p{font-size:14.5px;line-height:1.6;color:#334;max-width:760px;margin-bottom:12px;}
+  .welcome .whos-here-label{font-weight:bold;color:var(--ink);margin-bottom:14px;}
+  .table-block{border:1px solid var(--line);border-radius:6px;padding:14px 16px 16px;margin-bottom:12px;background:#fbfcfd;}
+  .table-block-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px;}
+  .table-number{display:flex;flex-direction:column;gap:4px;}
+  .table-number label{font-size:11px;font-weight:bold;color:#7a8896;text-transform:uppercase;letter-spacing:.03em;}
+  .table-number input{font-family:inherit;font-size:13.5px;padding:8px 10px;border:1px solid var(--line);border-radius:4px;width:100px;}
+  .remove-table-btn{background:none;border:1px solid var(--line);color:#b3261e;font-size:16px;line-height:1;width:28px;height:28px;border-radius:4px;cursor:pointer;}
+  .remove-table-btn:hover{background:#fdeceb;}
+  .rollcall{display:flex;gap:14px;flex-wrap:wrap;}
+  .rollcall-item{display:flex;flex-direction:column;gap:4px;}
+  .rollcall-item label{font-size:11px;font-weight:bold;color:#7a8896;text-transform:uppercase;letter-spacing:.03em;}
+  .rollcall-item input{font-family:inherit;font-size:13.5px;padding:8px 10px;border:1px solid var(--line);border-radius:4px;width:150px;}
+  .add-table-btn{background:#fff;color:#0b5e86;border:1.5px solid var(--blue);font-family:inherit;font-size:13.5px;font-weight:bold;padding:9px 16px;border-radius:4px;cursor:pointer;margin-bottom:18px;}
+  .add-table-btn:hover{background:#eaf6fd;}
+  .start-btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#3a2a00;text-decoration:none;font-weight:bold;font-size:14.5px;padding:11px 20px;border-radius:4px;}
+  .start-btn:hover{filter:brightness(1.05);}
   .day-section{padding:26px 32px;border-bottom:1px solid var(--line);}
   .day-section:last-of-type{border-bottom:none;}
   .day-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap;}
@@ -61,6 +80,40 @@
     </div>
     <svg class="aramco-logo" viewBox="0 0 464.71 93.7" xmlns="http://www.w3.org/2000/svg"><g><path d=" M 324.58 36.94 C 308.96 36.94 296.2 49.69 296.2 65.32 C 296.2 80.95 308.95 93.7 324.58 93.7 C 340.21 93.7 352.8 80.95 352.8 65.32 C 352.8 49.69 340.2 36.94 324.58 36.94 Z M 324.58 80.78 C 315.97 80.78 309.11 73.77 309.11 65.31 C 309.11 56.85 315.97 50.01 324.58 50.01 C 333.19 50.01 339.88 56.87 339.88 65.31 C 339.88 73.75 333.02 80.78 324.58 80.78 Z" fill="#5F646A"/><path d=" M 220.65 36.3 C 214.43 36.3 208.05 37.58 202.95 39.65 C 198.8 37.26 194.82 36.3 189.08 36.3 C 181.91 36.3 174.57 37.26 166.6 39.97 L 165.16 40.45 L 165.16 92.58 L 179.35 92.58 L 179.35 49.85 C 182.22 48.89 184.45 48.57 187.32 48.57 C 194.34 48.57 196.41 50.8 196.41 58.14 L 196.41 92.58 L 210.76 92.58 L 210.76 57.19 C 210.76 54 210.6 51.93 210.12 50.02 C 212.99 49.06 215.22 48.58 217.77 48.58 C 224.47 48.58 227.49 51.61 227.49 58.15 L 227.49 92.59 L 241.68 92.59 L 241.68 57.04 C 241.68 50.02 240.57 45.88 237.38 42.37 C 233.87 38.54 227.97 36.31 220.64 36.31 Z" fill="#5F646A"/><path d=" M 277.52 81.34 C 268.07 81.34 262.64 75.47 262.64 65.22 C 262.64 54.97 268.12 48.7 277.66 48.7 C 279.64 48.7 281.31 48.91 282.9 49.39 C 282.9 49.39 285.83 50.22 288.4 52.24 L 294.41 41.94 C 291.14 39.21 287.28 38.03 285.98 37.7 C 282.3 36.59 276.89 36.42 276.89 36.42 C 259.83 36.42 248.38 48.25 248.38 65.84 C 248.38 83.43 259.24 93.68 276.07 93.68 C 276.07 93.68 287.35 94.18 294.92 87.16 L 287.86 78.09 C 284.03 80.53 281.37 81.34 277.51 81.34 Z" fill="#5F646A"/><path d=" M 92.55 36.78 C 72.3 36.78 62.9 45.71 62.9 64.68 L 62.9 92.58 L 77.41 92.58 L 77.41 64.52 C 77.41 54.95 82.83 49.05 91.28 49.05 C 94.79 49.05 97.5 49.69 99.41 50.17 L 102.76 37.58 C 97.14 36.78 92.56 36.78 92.56 36.78 Z" fill="#5F646A"/><path d=" M 156.88 63.08 L 156.88 92.57 L 137.43 92.57 C 124.04 92.57 118.14 91.61 111.12 86.99 C 105.06 82.84 101.71 75.03 101.71 64.83 C 101.71 50.8 110.96 36.61 131.36 36.61 C 147.94 36.61 156.87 45.86 156.87 63.08 Z M 142.69 64.67 C 142.69 53.99 138.54 48.73 130.25 48.73 C 121.96 48.73 116.38 54.95 116.38 64.35 C 116.38 75.67 121.8 80.61 133.92 80.61 L 142.69 80.61 L 142.69 64.67 Z" fill="#5F646A"/><path d=" M 55 63.08 L 55 92.57 L 35.71 92.57 C 22.32 92.57 16.42 91.61 9.4 86.99 C 3.34 82.84 -0.01 75.03 -0.01 64.83 C -0.01 50.8 9.24 36.61 29.64 36.61 C 46.22 36.61 54.99 45.86 54.99 63.08 Z M 40.33 64.67 C 40.33 53.83 36.5 48.73 28.05 48.73 C 19.6 48.73 14.18 54.95 14.18 64.35 C 14.18 75.67 19.6 80.61 31.72 80.61 L 40.33 80.61 L 40.33 64.67 Z" fill="#5F646A"/></g><g><rect x="372.68" y="0" width="92.02" height="92.02" fill="url(#gLogo)"/><defs><radialGradient id="gLogo" cx="331.41" cy="117.01" r="177.38" gradientUnits="userSpaceOnUse"><stop offset="0.29" stop-color="#7EBE42"/><stop offset="0.44" stop-color="#64AF45"/><stop offset="0.69" stop-color="#009848"/><stop offset="0.7" stop-color="#0763AF"/><stop offset="0.9" stop-color="#1999D6"/><stop offset="1" stop-color="#26AAE1"/></radialGradient></defs></g></svg>
   </header>
+
+  <div class="welcome">
+    <h2>Welcome to the exercises</h2>
+    <p>
+      Here's what's going to happen. Over the next three days there are fifteen activities in
+      total: twelve you work through on your own, and three you work as a team, taking on the
+      roles of a Frontier Exploration Asset Team. Every individual activity has a player
+      selector at the top, so each table can split the twelve between them however suits.
+    </p>
+    <p class="whos-here-label">Who's here? Every table uses the same five roles &mdash; fill in names against a player number, then use that same number when you pick up each activity.</p>
+
+    <div id="tablesContainer">
+      <div class="table-block">
+        <div class="table-block-head">
+          <div class="table-number">
+            <label>Table</label>
+            <input type="text" placeholder="Number">
+          </div>
+          <button type="button" class="remove-table-btn" title="Remove this table">&times;</button>
+        </div>
+        <div class="rollcall">
+          <div class="rollcall-item"><label>Player 1</label><input type="text" placeholder="Name"></div>
+          <div class="rollcall-item"><label>Player 2</label><input type="text" placeholder="Name"></div>
+          <div class="rollcall-item"><label>Player 3</label><input type="text" placeholder="Name"></div>
+          <div class="rollcall-item"><label>Player 4</label><input type="text" placeholder="Name"></div>
+          <div class="rollcall-item"><label>Player 5</label><input type="text" placeholder="Name"></div>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" id="addTableBtn" class="add-table-btn">+ Add another table</button>
+    <br>
+    <a class="start-btn" href="activity1_1_rose_diagram_bins.html">You start &mdash; Activity 1.1 &rarr;</a>
+  </div>
 
   <div class="intro">
     Every group and individual activity for the 3-day course, in timetable order. Each card opens the
@@ -267,5 +320,30 @@
     PT-628 Borehole Imaging &middot; Jasmin and Orchid Fields are synthetic training fields. All data shown is illustrative.
   </footer>
 </div>
+<script>
+(function(){
+  const container = document.getElementById('tablesContainer');
+  const addBtn = document.getElementById('addTableBtn');
+
+  function wireRemove(block){
+    const btn = block.querySelector('.remove-table-btn');
+    btn.addEventListener('click', function(){
+      if(container.querySelectorAll('.table-block').length > 1){
+        block.remove();
+      }
+    });
+  }
+
+  container.querySelectorAll('.table-block').forEach(wireRemove);
+
+  addBtn.addEventListener('click', function(){
+    const first = container.querySelector('.table-block');
+    const clone = first.cloneNode(true);
+    clone.querySelectorAll('input').forEach(inp => inp.value = '');
+    container.appendChild(clone);
+    wireRemove(clone);
+  });
+})();
+</script>
 </body>
 </html>
