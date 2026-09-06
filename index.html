@@ -2,370 +2,347 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Klondike — Stake Your Claim</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Rye&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<title>PT-628 Borehole Imaging — Course Activities</title>
 <style>
   :root{
-    --rust:#8a3b1f;
-    --gold:#d9a441;
-    --dark:#2b1c12;
-    --parchment:#f2e4c9;
-    --ink:#2b1c12;
-    --good:#2e7d32;
-    --bad:#b3261e;
+    --gold:#EBB120;
+    --blue:#1F9ED9;
+    --ink:#1a2b3c;
+    --paper:#ffffff;
+    --panel:#f4f6f8;
+    --line:#d7dde3;
+    --good:#1e8e3e;
   }
   *{box-sizing:border-box;}
   body{
-    margin:0;
-    background:linear-gradient(180deg,#3a2415,#241509);
-    font-family:'Inter',sans-serif;
+    font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+    background:var(--panel);
     color:var(--ink);
+    margin:0;
     padding:24px;
-    min-height:100vh;
   }
-  .wrap{max-width:1000px;margin:0 auto;background:var(--parchment);border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.4);overflow:hidden;border:3px solid var(--rust);}
-  header{background:var(--dark);color:var(--parchment);padding:22px 30px;text-align:center;border-bottom:4px solid var(--gold);}
-  header h1{font-family:'Rye',serif;font-size:38px;color:var(--gold);margin:0 0 4px;letter-spacing:.02em;}
-  .field-name{font-family:'Rye',serif;font-size:15px;color:#d8c9a8;margin-top:8px;letter-spacing:.03em;}
-
-  .role-bar{display:flex;align-items:center;justify-content:center;gap:12px;background:#3a2415;padding:12px 20px;border-bottom:2px solid var(--gold);flex-wrap:wrap;}
-  .role-bar label{color:var(--gold);font-size:13px;font-weight:600;}
-  .role-bar select{font-family:'Inter',sans-serif;font-size:13.5px;padding:6px 10px;border-radius:4px;border:1px solid var(--gold);background:#f2e4c9;color:var(--ink);}
-  .role-bar .role-note{font-size:12.5px;color:#d8c9a8;font-style:italic;}
-
-  .welcome{padding:26px 32px 30px;background:#f2e4c9;text-align:center;}
-  .welcome h2{font-family:'Rye',serif;font-size:26px;color:var(--rust);margin-bottom:10px;}
-  .welcome p{font-size:14.5px;line-height:1.6;color:#4a3520;max-width:640px;margin:0 auto 18px;}
-  .rollcall{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:18px;}
-  .rollcall-item{display:flex;flex-direction:column;gap:4px;text-align:left;}
-  .rollcall-item label{font-size:10.5px;font-weight:bold;color:#6b5330;text-transform:uppercase;letter-spacing:.03em;}
-  .rollcall-item input{font-family:'Inter',sans-serif;font-size:13.5px;padding:8px 10px;border:1px solid #c9b183;border-radius:4px;width:150px;}
-  .whos-driving-label{display:block;font-size:13px;font-weight:bold;color:var(--rust);margin-bottom:8px;}
-  #roleSelectStart{font-family:'Inter',sans-serif;font-size:13.5px;padding:8px 12px;border-radius:4px;border:1px solid #c9b183;margin-bottom:18px;}
-  header .sub{font-size:13.5px;color:#d8c9a8;}
-
-  .stats-bar{display:flex;justify-content:space-around;background:#e8d5a8;padding:14px 20px;border-bottom:2px solid var(--rust);}
-  .stat{text-align:center;}
-  .stat .val{font-family:'Rye',serif;font-size:24px;color:var(--rust);}
-  .stat .lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#6b5330;}
-
-  .game-area{padding:22px 26px;}
-  .instructions{font-size:14px;line-height:1.5;color:#4a3520;margin-bottom:16px;text-align:center;}
-
-  svg{background:#d8c39a;border:3px solid var(--dark);border-radius:4px;cursor:crosshair;display:block;margin:0 auto;}
-
-  .feedback{
-    margin-top:16px;padding:14px 18px;border-radius:6px;font-size:14.5px;line-height:1.5;
-    display:none;text-align:center;font-weight:600;
-  }
-  .feedback.show{display:block;}
-  .feedback.hit{background:#e3f2e1;border:2px solid var(--good);color:#1b5e20;}
-  .feedback.miss{background:#fbe6e3;border:2px solid var(--bad);color:#7a1a12;}
-
-  .controls{display:flex;justify-content:center;gap:14px;margin-top:20px;}
-  button{
-    font-family:'Rye',serif;font-size:16px;letter-spacing:.02em;
-    background:var(--rust);color:var(--parchment);border:none;border-radius:6px;
-    padding:12px 22px;cursor:pointer;
-  }
-  button.secondary{background:var(--dark);}
-  button:disabled{opacity:.4;cursor:not-allowed;}
-  button:hover:not(:disabled){filter:brightness(1.1);}
-
-  .gameover{display:none;text-align:center;padding:30px;background:var(--dark);color:var(--parchment);}
-  .gameover.show{display:block;}
-  .gameover h2{font-family:'Rye',serif;color:var(--gold);font-size:30px;margin-bottom:10px;}
-  .gameover .summary-line{font-size:15px;margin-bottom:6px;color:#d8c9a8;}
-  .gameover .missed-total{color:#e08a7a;font-weight:bold;}
-
-  footer{padding:12px 26px;font-size:11.5px;color:#6b5330;background:#e8d5a8;text-align:center;}
+  h1,h2,h3{font-family:"Segoe UI Semilight","Segoe UI",Trebuchet MS,Arial,sans-serif;font-weight:400;}
+  .wrap{max-width:1150px;margin:0 auto;background:var(--paper);border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.12);overflow:hidden;}
+  header{background:#fff;color:var(--ink);padding:22px 32px 20px;border-top:5px solid var(--gold);border-bottom:2px solid var(--gold);display:flex;align-items:flex-start;justify-content:space-between;gap:24px;}
+  header .header-text{min-width:0;}
+  header h1{margin:0 0 5px 0;font-size:25px;color:var(--ink);}
+  header .sub{color:#556677;font-size:14px;}
+  .aramco-logo{height:32px;width:auto;flex-shrink:0;background:none;border:none;border-radius:0;}
+  .intro{padding:20px 32px;border-bottom:1px solid var(--line);background:#fbf6e8;font-size:14.5px;line-height:1.55;}
+  .welcome{padding:26px 32px 30px;border-bottom:1px solid var(--line);background:#fff;}
+  .welcome h2{font-size:20px;margin-bottom:10px;}
+  .welcome p{font-size:14.5px;line-height:1.6;color:#334;max-width:760px;margin-bottom:12px;}
+  .welcome .whos-here-label{font-weight:bold;color:var(--ink);margin-bottom:14px;}
+  .table-block{border:1px solid var(--line);border-radius:6px;padding:14px 16px 16px;margin-bottom:12px;background:#fbfcfd;}
+  .table-block-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px;}
+  .table-number{display:flex;flex-direction:column;gap:4px;}
+  .table-number label{font-size:11px;font-weight:bold;color:#7a8896;text-transform:uppercase;letter-spacing:.03em;}
+  .table-number input{font-family:inherit;font-size:13.5px;padding:8px 10px;border:1px solid var(--line);border-radius:4px;width:100px;}
+  .remove-table-btn{background:none;border:1px solid var(--line);color:#b3261e;font-size:16px;line-height:1;width:28px;height:28px;border-radius:4px;cursor:pointer;}
+  .remove-table-btn:hover{background:#fdeceb;}
+  .rollcall{display:flex;gap:14px;flex-wrap:wrap;}
+  .rollcall-item{display:flex;flex-direction:column;gap:4px;}
+  .rollcall-item label{font-size:11px;font-weight:bold;color:#7a8896;text-transform:uppercase;letter-spacing:.03em;}
+  .rollcall-item input{font-family:inherit;font-size:13.5px;padding:8px 10px;border:1px solid var(--line);border-radius:4px;width:150px;}
+  .add-table-btn{background:#fff;color:#0b5e86;border:1.5px solid var(--blue);font-family:inherit;font-size:13.5px;font-weight:bold;padding:9px 16px;border-radius:4px;cursor:pointer;margin-bottom:18px;}
+  .add-table-btn:hover{background:#eaf6fd;}
+  .start-btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#3a2a00;text-decoration:none;font-weight:bold;font-size:14.5px;padding:11px 20px;border-radius:4px;}
+  .start-btn:hover{filter:brightness(1.05);}
+  .day-section{padding:26px 32px;border-bottom:1px solid var(--line);}
+  .day-section:last-of-type{border-bottom:none;}
+  .day-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap;}
+  .day-badge{display:inline-block;background:var(--ink);color:#fff;font-size:13px;font-weight:bold;padding:4px 14px;border-radius:14px;}
+  .day-theme{color:#556677;font-size:14px;}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:16px;}
+  .card{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:#fbfcfd;display:flex;flex-direction:column;}
+  .card.group{border-left:4px solid var(--gold);background:#fffdf5;}
+  .card .num{font-size:11px;font-weight:bold;color:#7a8896;letter-spacing:.03em;text-transform:uppercase;}
+  .card .module{font-size:11.5px;color:#8a96a3;margin-top:1px;margin-bottom:6px;}
+  .card .title{font-size:15.5px;font-weight:bold;color:var(--ink);margin-bottom:4px;line-height:1.3;}
+  .card .type-tag{display:inline-block;font-size:10.5px;font-weight:bold;padding:1px 8px;border-radius:8px;margin-bottom:10px;width:fit-content;}
+  .type-tag.tool{background:#eaf6fd;color:#0b5e86;}
+  .type-tag.quiz{background:#f3ecfb;color:#5b3c94;}
+  .type-tag.group{background:#fdf3d9;color:#8a6a00;}
+  .card-links{margin-top:auto;display:flex;flex-direction:column;gap:6px;padding-top:8px;}
+  .btn-open{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--blue);color:#fff;text-decoration:none;font-weight:bold;font-size:13.5px;padding:9px 14px;border-radius:4px;}
+  .btn-open:hover{filter:brightness(1.06);}
+  .btn-pdf{display:inline-flex;align-items:center;gap:6px;color:#556677;text-decoration:none;font-size:12.5px;padding:4px 2px;}
+  .btn-pdf:hover{color:var(--ink);text-decoration:underline;}
+  footer{padding:18px 32px;font-size:12px;color:#7a8896;background:var(--panel);}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>Klondike</h1>
-    <div class="sub">Stake your claim &middot; drill the basin &middot; find out what you missed</div>
-    <div class="field-name" id="fieldName">Jasmin Field</div>
+    <div class="header-text">
+      <h1>PT-628 &mdash; Borehole Imaging</h1>
+      <div class="sub">Petrophysics &middot; Upstream Professional Development Center &middot; All 15 course activities</div>
+    </div>
+    <svg class="aramco-logo" viewBox="0 0 464.71 93.7" xmlns="http://www.w3.org/2000/svg"><g><path d=" M 324.58 36.94 C 308.96 36.94 296.2 49.69 296.2 65.32 C 296.2 80.95 308.95 93.7 324.58 93.7 C 340.21 93.7 352.8 80.95 352.8 65.32 C 352.8 49.69 340.2 36.94 324.58 36.94 Z M 324.58 80.78 C 315.97 80.78 309.11 73.77 309.11 65.31 C 309.11 56.85 315.97 50.01 324.58 50.01 C 333.19 50.01 339.88 56.87 339.88 65.31 C 339.88 73.75 333.02 80.78 324.58 80.78 Z" fill="#5F646A"/><path d=" M 220.65 36.3 C 214.43 36.3 208.05 37.58 202.95 39.65 C 198.8 37.26 194.82 36.3 189.08 36.3 C 181.91 36.3 174.57 37.26 166.6 39.97 L 165.16 40.45 L 165.16 92.58 L 179.35 92.58 L 179.35 49.85 C 182.22 48.89 184.45 48.57 187.32 48.57 C 194.34 48.57 196.41 50.8 196.41 58.14 L 196.41 92.58 L 210.76 92.58 L 210.76 57.19 C 210.76 54 210.6 51.93 210.12 50.02 C 212.99 49.06 215.22 48.58 217.77 48.58 C 224.47 48.58 227.49 51.61 227.49 58.15 L 227.49 92.59 L 241.68 92.59 L 241.68 57.04 C 241.68 50.02 240.57 45.88 237.38 42.37 C 233.87 38.54 227.97 36.31 220.64 36.31 Z" fill="#5F646A"/><path d=" M 277.52 81.34 C 268.07 81.34 262.64 75.47 262.64 65.22 C 262.64 54.97 268.12 48.7 277.66 48.7 C 279.64 48.7 281.31 48.91 282.9 49.39 C 282.9 49.39 285.83 50.22 288.4 52.24 L 294.41 41.94 C 291.14 39.21 287.28 38.03 285.98 37.7 C 282.3 36.59 276.89 36.42 276.89 36.42 C 259.83 36.42 248.38 48.25 248.38 65.84 C 248.38 83.43 259.24 93.68 276.07 93.68 C 276.07 93.68 287.35 94.18 294.92 87.16 L 287.86 78.09 C 284.03 80.53 281.37 81.34 277.51 81.34 Z" fill="#5F646A"/><path d=" M 92.55 36.78 C 72.3 36.78 62.9 45.71 62.9 64.68 L 62.9 92.58 L 77.41 92.58 L 77.41 64.52 C 77.41 54.95 82.83 49.05 91.28 49.05 C 94.79 49.05 97.5 49.69 99.41 50.17 L 102.76 37.58 C 97.14 36.78 92.56 36.78 92.56 36.78 Z" fill="#5F646A"/><path d=" M 156.88 63.08 L 156.88 92.57 L 137.43 92.57 C 124.04 92.57 118.14 91.61 111.12 86.99 C 105.06 82.84 101.71 75.03 101.71 64.83 C 101.71 50.8 110.96 36.61 131.36 36.61 C 147.94 36.61 156.87 45.86 156.87 63.08 Z M 142.69 64.67 C 142.69 53.99 138.54 48.73 130.25 48.73 C 121.96 48.73 116.38 54.95 116.38 64.35 C 116.38 75.67 121.8 80.61 133.92 80.61 L 142.69 80.61 L 142.69 64.67 Z" fill="#5F646A"/><path d=" M 55 63.08 L 55 92.57 L 35.71 92.57 C 22.32 92.57 16.42 91.61 9.4 86.99 C 3.34 82.84 -0.01 75.03 -0.01 64.83 C -0.01 50.8 9.24 36.61 29.64 36.61 C 46.22 36.61 54.99 45.86 54.99 63.08 Z M 40.33 64.67 C 40.33 53.83 36.5 48.73 28.05 48.73 C 19.6 48.73 14.18 54.95 14.18 64.35 C 14.18 75.67 19.6 80.61 31.72 80.61 L 40.33 80.61 L 40.33 64.67 Z" fill="#5F646A"/></g><g><rect x="372.68" y="0" width="92.02" height="92.02" fill="url(#gLogo)"/><defs><radialGradient id="gLogo" cx="331.41" cy="117.01" r="177.38" gradientUnits="userSpaceOnUse"><stop offset="0.29" stop-color="#7EBE42"/><stop offset="0.44" stop-color="#64AF45"/><stop offset="0.69" stop-color="#009848"/><stop offset="0.7" stop-color="#0763AF"/><stop offset="0.9" stop-color="#1999D6"/><stop offset="1" stop-color="#26AAE1"/></radialGradient></defs></g></svg>
   </header>
 
-  <div class="welcome" id="welcomeScreen">
-    <h2>Get a team together</h2>
+  <div class="welcome">
+    <h2>Welcome to the exercises</h2>
     <p>
-      Before anyone stakes a claim, get your crew sorted. The same five roles run this whole
-      operation &mdash; whoever's at the wheel when a well comes in makes the call on how it plays out.
+      Here's what's going to happen. Over the next three days there are fifteen activities in
+      total: twelve you work through on your own, and three you work as a team, taking on the
+      roles of a Frontier Exploration Asset Team. Every individual activity has a player
+      selector at the top, so each table can split the twelve between them however suits.
     </p>
-    <div class="rollcall">
-      <div class="rollcall-item"><label>Geologist/Geophysicist</label><input type="text" placeholder="Name"></div>
-      <div class="rollcall-item"><label>Geosteerer</label><input type="text" placeholder="Name"></div>
-      <div class="rollcall-item"><label>Petrophysicist</label><input type="text" placeholder="Name"></div>
-      <div class="rollcall-item"><label>Exploration Manager</label><input type="text" placeholder="Name"></div>
-      <div class="rollcall-item"><label>Drilling Manager</label><input type="text" placeholder="Name"></div>
+    <p class="whos-here-label">Who's here? Every table uses the same five roles &mdash; fill in names against each role, then use that role when you pick up each activity.</p>
+
+    <div id="tablesContainer">
+      <div class="table-block">
+        <div class="table-block-head">
+          <div class="table-number">
+            <label>Table</label>
+            <input type="text" placeholder="Number">
+          </div>
+          <button type="button" class="remove-table-btn" title="Remove this table">&times;</button>
+        </div>
+        <div class="rollcall">
+          <div class="rollcall-item"><label>Geologist/Geophysicist</label><input type="text" placeholder="Name"></div>
+          <div class="rollcall-item"><label>Geosteerer</label><input type="text" placeholder="Name"></div>
+          <div class="rollcall-item"><label>Petrophysicist</label><input type="text" placeholder="Name"></div>
+          <div class="rollcall-item"><label>Exploration Manager</label><input type="text" placeholder="Name"></div>
+          <div class="rollcall-item"><label>Drilling Manager</label><input type="text" placeholder="Name"></div>
+        </div>
+      </div>
     </div>
-    <label class="whos-driving-label" for="roleSelectStart">Who's driving first?</label>
-    <select id="roleSelectStart">
-      <option value="geologist_geophysicist">Geologist/Geophysicist</option>
-      <option value="geosteerer">Geosteerer</option>
-      <option value="petrophysicist">Petrophysicist</option>
-      <option value="exploration_manager">Exploration Manager</option>
-      <option value="drilling_manager" selected>Drilling Manager</option>
-    </select>
+
+    <button type="button" id="addTableBtn" class="add-table-btn">+ Add another table</button>
     <br>
-    <button id="startGameBtn" class="start-btn">Start Prospecting &rarr;</button>
+    <a class="start-btn" href="activity1_1_rose_diagram_bins.html">You start &mdash; Activity 1.1 &rarr;</a>
   </div>
 
-  <div id="gameScreen" style="display:none;">
-  <div class="role-bar">
-    <label for="roleSelect">Playing as</label>
-    <select id="roleSelect">
-      <option value="geologist_geophysicist">Geologist/Geophysicist</option>
-      <option value="geosteerer">Geosteerer</option>
-      <option value="petrophysicist">Petrophysicist</option>
-      <option value="exploration_manager">Exploration Manager</option>
-      <option value="drilling_manager" selected>Drilling Manager</option>
-    </select>
-    <span class="role-note" id="roleNote"></span>
+  <div class="intro">
+    Every group and individual activity for the 3-day course, in timetable order. Each card opens the
+    interactive tool in your browser; the PDF link below it is the matching fillable worksheet for
+    printing or emailing out ahead of the session.
   </div>
 
-  <div class="stats-bar">
-    <div class="stat"><div class="val" id="creditsVal">1000</div><div class="lbl">Credits</div></div>
-    <div class="stat"><div class="val" id="wellsVal">0</div><div class="lbl">Wells Drilled</div></div>
-    <div class="stat"><div class="val" id="foundVal">0</div><div class="lbl">Barrels Found</div></div>
-    <div class="stat"><div class="val" id="hitRateVal">&mdash;</div><div class="lbl">Hit Rate</div></div>
-  </div>
-
-  <div class="game-area">
-    <div class="instructions">
-      A drill costs <strong>100 credits</strong>. Click anywhere in the basin below to stake your claim.
-      Somewhere under this ground are a handful of reserves &mdash; find them, or find out how close you came.
+  <div class="day-section">
+    <div class="day-head">
+      <span class="day-badge">Day 1 &middot; Pre-Drilling</span>
+      <span class="day-theme">Tool principles, acquisition and application to drilling, modelling and risks</span>
     </div>
-    <svg id="basinSvg" width="760" height="420" viewBox="0 0 760 420"></svg>
-    <div class="feedback" id="feedback"></div>
-    <div class="controls">
-      <button id="cashOutBtn">Cash Out &amp; Reveal Basin</button>
-      <button id="newBasinBtn" class="secondary">New Basin</button>
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="num">Activity 1.1</div>
+        <div class="module">Module 1 &middot; Introduction to Borehole Images</div>
+        <div class="title">Rose Diagrams, Bin Size, and Sample Bias</div>
+        <span class="type-tag tool">Interactive tool</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity1_1_rose_diagram_bins.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity1_1_rose_diagram_bins.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">Activity 2.1</div>
+        <div class="module">Module 2 &middot; Wireline and LWD Acquisition</div>
+        <div class="title">Magnetometer Response Across Trajectory Types</div>
+        <span class="type-tag tool">Interactive tool</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity2_1_magnetometer_trajectories.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity2_1_magnetometer_trajectories.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">Activity 3.1</div>
+        <div class="module">Module 3 &middot; QC and Interpretation of Image Logs</div>
+        <div class="title">Image Artefact Identification</div>
+        <span class="type-tag quiz">Online quiz</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity3_1_artefact_id_quiz.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity3_1_artefact_id_quiz.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">Activity 4.1</div>
+        <div class="module">Module 4 &middot; Structural Interpretation</div>
+        <div class="title">The Three-Point Problem</div>
+        <span class="type-tag tool">Interactive tool</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity4_1_three_point_problem.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity4_1_three_point_problem.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card group">
+        <div class="num">Activity 5.1</div>
+        <div class="module">Module 5 &middot; Group Interactive Exercise</div>
+        <div class="title">Jasmin Field &mdash; Planning the Acquisition Programme</div>
+        <span class="type-tag group">Group exercise</span>
+        <div class="card-links">
+          <a class="btn-open" href="exercise1_predrill_jasmin_field.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="exercise1_predrill_jasmin_field.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div class="gameover" id="gameOver">
-    <h2>Basin Revealed</h2>
-    <div class="summary-line" id="summaryWells"></div>
-    <div class="summary-line" id="summaryFound"></div>
-    <div class="summary-line missed-total" id="summaryMissed"></div>
-    <div class="controls" style="margin-top:16px;">
-      <button id="playAgainBtn">Try a New Basin</button>
+  <div class="day-section">
+    <div class="day-head">
+      <span class="day-badge">Day 2 &middot; Drilling</span>
+      <span class="day-theme">Application of image data in drilling and well construction</span>
+    </div>
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="num">Activity 6.1</div>
+        <div class="module">Module 6 &middot; Horizontal Well Interpretation &amp; Geosteering</div>
+        <div class="title">Target Exposure and Well Placement Accuracy</div>
+        <span class="type-tag tool">Interactive tool</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity6_1_exposure_accuracy.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity6_1_exposure_accuracy.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">Activity 7.1</div>
+        <div class="module">Module 7 &middot; Fracture Interpretation &amp; Aperture Mechanics</div>
+        <div class="title">Fracture Aperture and Porosity Calculation</div>
+        <span class="type-tag tool">Interactive tool</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity7_1_aperture_porosity.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity7_1_aperture_porosity.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">Activity 8.1</div>
+        <div class="module">Module 8 &middot; Wellbore Stability &amp; In-Situ Stress</div>
+        <div class="title">Stress Direction from Breakouts and DITFs</div>
+        <span class="type-tag quiz">Online quiz</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity8_1_stress_direction_quiz.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity8_1_stress_direction_quiz.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">Activity 9.1</div>
+        <div class="module">Module 9 &middot; Applications of Fracture Characterisation</div>
+        <div class="title">Perforation and Frac Stage Placement</div>
+        <span class="type-tag tool">Interactive tool</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity9_1_perforation_placement.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity9_1_perforation_placement.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card group">
+        <div class="num">Activity 10.1</div>
+        <div class="module">Module 10 &middot; Group Activity Exercise</div>
+        <div class="title">Jasmin Field &mdash; LWD Dip Data &amp; the Fault Cut Decision</div>
+        <span class="type-tag group">Group exercise</span>
+        <div class="card-links">
+          <a class="btn-open" href="exercise2_drilling_jasmin_field.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="exercise2_drilling_jasmin_field.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <div class="day-section">
+    <div class="day-head">
+      <span class="day-badge">Day 3 &middot; Post-Drill</span>
+      <span class="day-theme">Reservoir characterisation and petrophysical applications</span>
+    </div>
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="num">Activity 11.1</div>
+        <div class="module">Module 11 &middot; Sedimentological Interpretation</div>
+        <div class="title">Sedimentary Origin from Image Features</div>
+        <span class="type-tag quiz">Online quiz</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity11_1_sedimentary_origin_quiz.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity11_1_sedimentary_origin_quiz.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">Activity 12.1</div>
+        <div class="module">Module 12 &middot; Electrofacies Classification &amp; Rock Typing</div>
+        <div class="title">Net-to-Gross and Thin-Bed Resolution</div>
+        <span class="type-tag tool">Interactive tool</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity12_1_net_to_gross.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity12_1_net_to_gross.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">Activity 13.1</div>
+        <div class="module">Module 13 &middot; Clastic Reservoir Characterisation</div>
+        <div class="title">Clastic Facies and Offset Well Placement</div>
+        <span class="type-tag quiz">Online quiz</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity13_1_clastic_facies_quiz.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity13_1_clastic_facies_quiz.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">Activity 14.1</div>
+        <div class="module">Module 14 &middot; Carbonate Reservoir Characterisation</div>
+        <div class="title">Carbonate Electrofacies and Pore Systems</div>
+        <span class="type-tag quiz">Online quiz</span>
+        <div class="card-links">
+          <a class="btn-open" href="activity14_1_carbonate_electrofacies_quiz.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="activity14_1_carbonate_electrofacies_quiz.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+      <div class="card group">
+        <div class="num">Activity 15.1</div>
+        <div class="module">Module 15 &middot; Group Activity Exercise</div>
+        <div class="title">Orchid Field &mdash; Depositional Model &amp; the Offset Well</div>
+        <span class="type-tag group">Group exercise</span>
+        <div class="card-links">
+          <a class="btn-open" href="exercise3_postdrill_orchid_field.html">Open exercise &rarr;</a>
+          <a class="btn-pdf" href="exercise3_postdrill_orchid_field.pdf">&darr; Download PDF worksheet</a>
+        </div>
+      </div>
+
+    </div>
   </div>
 
-  <footer>Klondike is a game of virtual credits only &mdash; no real money or cryptocurrency changes hands here.</footer>
+  <footer>
+    PT-628 Borehole Imaging &middot; Jasmin and Orchid Fields are synthetic training fields. All data shown is illustrative.
+  </footer>
 </div>
-
 <script>
 (function(){
-  const W = 760, H = 420;
-  const DRILL_COST = 100;
-  const START_CREDITS = 1000;
-  const CREDITS_PER_BARREL = 2;
+  const container = document.getElementById('tablesContainer');
+  const addBtn = document.getElementById('addTableBtn');
 
-  let credits = START_CREDITS;
-  let wells = 0;
-  let hits = 0;
-  let barrelsFound = 0;
-  let reserves = [];
-  let gameEnded = false;
-  const drilledPoints = [];
-
-  const ROLE_FLAVOR = {
-    geologist_geophysicist: {
-      hit: "The structural read matches this pocket \u2014 the trap held.",
-      miss: "Nothing in the structure suggested a trap this far out."
-    },
-    geosteerer: {
-      hit: "A trajectory here would have kept you in zone the whole way.",
-      miss: "You'd have needed to correct course a long way back to reach that reserve."
-    },
-    petrophysicist: {
-      hit: "Log response here would have shown strong pay from the start.",
-      miss: "Porosity and saturation here would have told you this ground was wet."
-    },
-    exploration_manager: {
-      hit: "Worth the spend \u2014 this location earns its place in the programme.",
-      miss: "Hard to justify this location on the numbers alone."
-    },
-    drilling_manager: {
-      hit: "A straightforward well to plan and execute from here.",
-      miss: "No easy fix on trajectory would have saved this one."
-    }
-  };
-
-  function currentRole(){
-    return document.getElementById('roleSelect').value;
-  }
-
-  const svg = document.getElementById('basinSvg');
-  const svgNS = "http://www.w3.org/2000/svg";
-  function el(tag, attrs){
-    const e = document.createElementNS(svgNS, tag);
-    for(const k in attrs) e.setAttribute(k, attrs[k]);
-    return e;
-  }
-
-  function seededRandom(){ return Math.random(); }
-
-  function generateBasin(){
-    reserves = [];
-    const count = 4 + Math.floor(seededRandom()*2); // 4-5 reserves
-    for(let i=0;i<count;i++){
-      const r = 25 + seededRandom()*45; // radius 25-70
-      const cx = r + seededRandom()*(W - 2*r);
-      const cy = r + seededRandom()*(H - 2*r);
-      const totalBarrels = Math.round((r*r/100) * (8 + seededRandom()*12)); // bigger radius = more barrels
-      reserves.push({cx, cy, r, totalBarrels, found:false, bestHitDist:null});
-    }
-  }
-
-  function render(revealAll){
-    svg.innerHTML = "";
-    svg.appendChild(el('rect',{x:0,y:0,width:W,height:H,fill:'#d8c39a'}));
-
-    // subtle grid texture
-    for(let x=0;x<W;x+=40){
-      svg.appendChild(el('line',{x1:x,y1:0,x2:x,y2:H,stroke:'#c9b183','stroke-width':0.5}));
-    }
-    for(let y=0;y<H;y+=40){
-      svg.appendChild(el('line',{x1:0,y1:y,x2:W,y2:y,stroke:'#c9b183','stroke-width':0.5}));
-    }
-
-    if(revealAll){
-      reserves.forEach(res=>{
-        svg.appendChild(el('circle',{cx:res.cx,cy:res.cy,r:res.r,fill: res.found ? '#d9a441' : '#8a3b1f', 'fill-opacity':0.45, stroke: res.found ? '#8a3b1f' : '#5a2410','stroke-width':2}));
-        const label = el('text',{x:res.cx,y:res.cy+4,'font-size':11,fill:'#2b1c12','text-anchor':'middle','font-weight':'bold'});
-        label.textContent = res.totalBarrels + (res.found ? ' (found)' : ' (missed)');
-        svg.appendChild(label);
-      });
-    }
-
-    drilledPoints.forEach(p=>{
-      if(p.hit){
-        svg.appendChild(el('circle',{cx:p.x,cy:p.y,r:7,fill:'#2e7d32',stroke:'#fff','stroke-width':2}));
-      } else {
-        svg.appendChild(el('line',{x1:p.x-6,y1:p.y-6,x2:p.x+6,y2:p.y+6,stroke:'#b3261e','stroke-width':2.5}));
-        svg.appendChild(el('line',{x1:p.x-6,y1:p.y+6,x2:p.x+6,y2:p.y-6,stroke:'#b3261e','stroke-width':2.5}));
+  function wireRemove(block){
+    const btn = block.querySelector('.remove-table-btn');
+    btn.addEventListener('click', function(){
+      if(container.querySelectorAll('.table-block').length > 1){
+        block.remove();
       }
     });
   }
 
-  function updateStats(){
-    document.getElementById('creditsVal').textContent = credits;
-    document.getElementById('wellsVal').textContent = wells;
-    document.getElementById('foundVal').textContent = barrelsFound;
-    document.getElementById('hitRateVal').textContent = wells === 0 ? '\u2014' : Math.round((hits/wells)*100) + '%';
-    document.getElementById('cashOutBtn').disabled = wells === 0;
-  }
+  container.querySelectorAll('.table-block').forEach(wireRemove);
 
-  function dist(x1,y1,x2,y2){ return Math.hypot(x1-x2, y1-y2); }
-
-  function drillAt(x, y){
-    if(gameEnded) return;
-    if(credits < DRILL_COST){
-      showFeedback(false, "Out of credits. Cash out to see the full basin, or start a new one.");
-      return;
-    }
-    credits -= DRILL_COST;
-    wells++;
-
-    let hitReserve = null;
-    let minDist = Infinity;
-    let nearestReserve = null;
-    reserves.forEach(res=>{
-      const d = dist(x,y,res.cx,res.cy);
-      if(d <= res.r && !hitReserve){
-        hitReserve = res;
-      }
-      const edgeDist = d - res.r;
-      if(edgeDist < minDist){
-        minDist = edgeDist;
-        nearestReserve = res;
-      }
-    });
-
-    if(hitReserve){
-      const d = dist(x,y,hitReserve.cx,hitReserve.cy);
-      const proportion = 1 - (d / hitReserve.r);
-      const barrels = Math.round(hitReserve.totalBarrels * proportion * 0.6 + hitReserve.totalBarrels*0.1);
-      const award = barrels * CREDITS_PER_BARREL;
-      credits += award;
-      barrelsFound += barrels;
-      hits++;
-      hitReserve.found = true;
-      drilledPoints.push({x,y,hit:true});
-      showFeedback(true, `Strike! ${barrels.toLocaleString()} barrels recovered, +${award.toLocaleString()} credits. ${ROLE_FLAVOR[currentRole()].hit}`);
-    } else {
-      drilledPoints.push({x,y,hit:false});
-      const missedBy = Math.round(minDist);
-      showFeedback(false, `Dry hole. The nearest reserve holds an estimated ${nearestReserve.totalBarrels.toLocaleString()} barrels, ${missedBy}m from here. ${ROLE_FLAVOR[currentRole()].miss}`);
-    }
-
-    render(false);
-    updateStats();
-
-    if(credits < DRILL_COST){
-      showFeedback(false, "Out of credits. Cash out to reveal the basin.");
-    }
-  }
-
-  function showFeedback(isHit, text){
-    const fb = document.getElementById('feedback');
-    fb.className = 'feedback show ' + (isHit ? 'hit' : 'miss');
-    fb.textContent = text;
-  }
-
-  svg.addEventListener('click', function(e){
-    const rect = svg.getBoundingClientRect();
-    const scaleX = W / rect.width, scaleY = H / rect.height;
-    const x = (e.clientX - rect.left) * scaleX;
-    const y = (e.clientY - rect.top) * scaleY;
-    drillAt(x, y);
+  addBtn.addEventListener('click', function(){
+    const first = container.querySelector('.table-block');
+    const clone = first.cloneNode(true);
+    clone.querySelectorAll('input').forEach(inp => inp.value = '');
+    container.appendChild(clone);
+    wireRemove(clone);
   });
-
-  document.getElementById('cashOutBtn').addEventListener('click', function(){
-    gameEnded = true;
-    render(true);
-    const totalBarrelsInBasin = reserves.reduce((s,r)=>s+r.totalBarrels,0);
-    const missedBarrels = reserves.filter(r=>!r.found).reduce((s,r)=>s+r.totalBarrels,0);
-    document.getElementById('summaryWells').textContent = `${wells} wells drilled, ${hits} strikes.`;
-    document.getElementById('summaryFound').textContent = `${barrelsFound.toLocaleString()} barrels found, ending with ${credits.toLocaleString()} credits.`;
-    document.getElementById('summaryMissed').textContent = missedBarrels > 0
-      ? `${missedBarrels.toLocaleString()} barrels sitting undiscovered in this basin when you walked away.`
-      : `You found every reserve in this basin. Nothing left behind.`;
-    document.getElementById('gameOver').classList.add('show');
-  });
-
-  function newBasin(){
-    credits = START_CREDITS;
-    wells = 0; hits = 0; barrelsFound = 0;
-    drilledPoints.length = 0;
-    gameEnded = false;
-    document.getElementById('gameOver').classList.remove('show');
-    document.getElementById('feedback').className = 'feedback';
-    generateBasin();
-    render(false);
-    updateStats();
-  }
-
-  document.getElementById('newBasinBtn').addEventListener('click', newBasin);
-  document.getElementById('playAgainBtn').addEventListener('click', newBasin);
-
-  document.getElementById('startGameBtn').addEventListener('click', function(){
-    const startRole = document.getElementById('roleSelectStart').value;
-    document.getElementById('roleSelect').value = startRole;
-    document.getElementById('welcomeScreen').style.display = 'none';
-    document.getElementById('gameScreen').style.display = 'block';
-  });
-
-  newBasin();
 })();
 </script>
 </body>
