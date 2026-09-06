@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PT-628 Activity 5.1 — Jasmin Field: Planning the Acquisition Programme</title>
+<style>
+  :root{
+    --gold:#EBB120;
+    --blue:#1F9ED9;
+    --ink:#1a2b3c;
+    --paper:#ffffff;
+    --panel:#f4f6f8;
+    --line:#d7dde3;
+    --good:#1e8e3e;
+    --warn:#b3540d;
+    --bad:#b3261e;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+    background:var(--panel);
+    color:var(--ink);
+    margin:0;
+    padding:24px;
+  }
+  h1,h2,h3{font-family:"Segoe UI Semilight","Segoe UI",Trebuchet MS,Arial,sans-serif;font-weight:400;}
+  .wrap{max-width:1100px;margin:0 auto;background:var(--paper);border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.12);overflow:hidden;}
+  header{background:#fff;color:var(--ink);padding:18px 28px 16px;border-top:5px solid var(--gold);border-bottom:2px solid var(--gold);display:flex;align-items:flex-start;justify-content:space-between;gap:24px;}
+  header .header-text{min-width:0;}
+  header h1{margin:0 0 4px 0;font-size:21px;color:var(--ink);}
+  header .sub{color:#556677;font-size:13.5px;}
+  .badge{display:inline-block;background:var(--gold);color:#3a2a00;font-size:12px;font-weight:bold;padding:2px 10px;border-radius:10px;margin-bottom:8px;}
+  section{padding:22px 28px;border-bottom:1px solid var(--line);}
+  .brief{background:#fbf6e8;border-left:4px solid var(--gold);padding:14px 18px;font-size:15px;line-height:1.5;}
+  .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:12px;}
+  .team-role{background:var(--panel);border-left:3px solid var(--blue);border-radius:4px;padding:10px 12px;font-size:13px;}
+  .team-role strong{display:block;color:var(--ink);margin-bottom:3px;}
+  .team-role span{color:#556677;}
+  .role-tag{display:inline-block;background:#eaf6fd;color:#0b5e86;font-size:11px;font-weight:bold;padding:2px 9px;border-radius:9px;margin-left:8px;vertical-align:middle;}
+  table.welldata{width:100%;border-collapse:collapse;font-size:13.5px;margin:14px 0;}
+  table.welldata th, table.welldata td{padding:8px 10px;border:1px solid var(--line);text-align:left;}
+  table.welldata th{background:var(--panel);width:220px;}
+  .choice-row{display:flex;gap:14px;margin:14px 0;flex-wrap:wrap;}
+  .choice-block{flex:1;min-width:220px;}
+  .choice-block label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px;}
+  select{font-family:inherit;font-size:14px;padding:9px 10px;border:1px solid var(--line);border-radius:4px;width:100%;}
+  label{display:block;font-size:13px;font-weight:bold;margin:14px 0 6px;}
+  textarea{
+    font-family:inherit;font-size:14px;padding:10px;border:1px solid var(--line);border-radius:4px;width:100%;min-height:80px;resize:vertical;
+  }
+  button{
+    font-family:inherit;font-size:14px;font-weight:bold;
+    background:var(--blue);color:#fff;border:none;border-radius:4px;
+    padding:9px 16px;cursor:pointer;margin-top:10px;
+  }
+  button.gold{background:var(--gold);color:#3a2a00;}
+  button:hover{filter:brightness(1.06);}
+  .feedback{margin-top:14px;padding:14px 16px;border-radius:4px;font-size:14px;line-height:1.55;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:#eaf7ee;border-left:4px solid var(--good);}
+  .feedback.close{background:#fff6ea;border-left:4px solid var(--warn);}
+  .feedback.no{background:#fdeceb;border-left:4px solid var(--bad);}
+  footer{padding:14px 28px;font-size:12px;color:#7a8896;background:var(--panel);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="header-text">
+      <div class="badge">PT-628 &middot; Day 1 &middot; Activity 5.1</div>
+      <h1>Jasmin Field &mdash; Planning the Acquisition Programme</h1>
+      <div class="sub">Group exercise &middot; Case study: two contrasting wells, one logging programme decision each</div>
+    </div>
+    <svg class="aramco-logo" viewBox="0 0 464.71 93.7" style="height:28px;width:auto;flex-shrink:0;background:none;border:none;border-radius:0;" xmlns="http://www.w3.org/2000/svg"><g><path d=" M 324.58 36.94 C 308.96 36.94 296.2 49.69 296.2 65.32 C 296.2 80.95 308.95 93.7 324.58 93.7 C 340.21 93.7 352.8 80.95 352.8 65.32 C 352.8 49.69 340.2 36.94 324.58 36.94 Z M 324.58 80.78 C 315.97 80.78 309.11 73.77 309.11 65.31 C 309.11 56.85 315.97 50.01 324.58 50.01 C 333.19 50.01 339.88 56.87 339.88 65.31 C 339.88 73.75 333.02 80.78 324.58 80.78 Z" fill="#5F646A"/><path d=" M 220.65 36.3 C 214.43 36.3 208.05 37.58 202.95 39.65 C 198.8 37.26 194.82 36.3 189.08 36.3 C 181.91 36.3 174.57 37.26 166.6 39.97 L 165.16 40.45 L 165.16 92.58 L 179.35 92.58 L 179.35 49.85 C 182.22 48.89 184.45 48.57 187.32 48.57 C 194.34 48.57 196.41 50.8 196.41 58.14 L 196.41 92.58 L 210.76 92.58 L 210.76 57.19 C 210.76 54 210.6 51.93 210.12 50.02 C 212.99 49.06 215.22 48.58 217.77 48.58 C 224.47 48.58 227.49 51.61 227.49 58.15 L 227.49 92.59 L 241.68 92.59 L 241.68 57.04 C 241.68 50.02 240.57 45.88 237.38 42.37 C 233.87 38.54 227.97 36.31 220.64 36.31 Z" fill="#5F646A"/><path d=" M 277.52 81.34 C 268.07 81.34 262.64 75.47 262.64 65.22 C 262.64 54.97 268.12 48.7 277.66 48.7 C 279.64 48.7 281.31 48.91 282.9 49.39 C 282.9 49.39 285.83 50.22 288.4 52.24 L 294.41 41.94 C 291.14 39.21 287.28 38.03 285.98 37.7 C 282.3 36.59 276.89 36.42 276.89 36.42 C 259.83 36.42 248.38 48.25 248.38 65.84 C 248.38 83.43 259.24 93.68 276.07 93.68 C 276.07 93.68 287.35 94.18 294.92 87.16 L 287.86 78.09 C 284.03 80.53 281.37 81.34 277.51 81.34 Z" fill="#5F646A"/><path d=" M 92.55 36.78 C 72.3 36.78 62.9 45.71 62.9 64.68 L 62.9 92.58 L 77.41 92.58 L 77.41 64.52 C 77.41 54.95 82.83 49.05 91.28 49.05 C 94.79 49.05 97.5 49.69 99.41 50.17 L 102.76 37.58 C 97.14 36.78 92.56 36.78 92.56 36.78 Z" fill="#5F646A"/><path d=" M 156.88 63.08 L 156.88 92.57 L 137.43 92.57 C 124.04 92.57 118.14 91.61 111.12 86.99 C 105.06 82.84 101.71 75.03 101.71 64.83 C 101.71 50.8 110.96 36.61 131.36 36.61 C 147.94 36.61 156.87 45.86 156.87 63.08 Z M 142.69 64.67 C 142.69 53.99 138.54 48.73 130.25 48.73 C 121.96 48.73 116.38 54.95 116.38 64.35 C 116.38 75.67 121.8 80.61 133.92 80.61 L 142.69 80.61 L 142.69 64.67 Z" fill="#5F646A"/><path d=" M 55 63.08 L 55 92.57 L 35.71 92.57 C 22.32 92.57 16.42 91.61 9.4 86.99 C 3.34 82.84 -0.01 75.03 -0.01 64.83 C -0.01 50.8 9.24 36.61 29.64 36.61 C 46.22 36.61 54.99 45.86 54.99 63.08 Z M 40.33 64.67 C 40.33 53.83 36.5 48.73 28.05 48.73 C 19.6 48.73 14.18 54.95 14.18 64.35 C 14.18 75.67 19.6 80.61 31.72 80.61 L 40.33 80.61 L 40.33 64.67 Z" fill="#5F646A"/></g><g><rect x="372.68" y="0" width="92.02" height="92.02" fill="url(#g1)"/><defs><radialGradient id="g1" cx="331.41" cy="117.01" r="177.38" gradientUnits="userSpaceOnUse"><stop offset="0.29" stop-color="#7EBE42"/><stop offset="0.44" stop-color="#64AF45"/><stop offset="0.69" stop-color="#009848"/><stop offset="0.7" stop-color="#0763AF"/><stop offset="0.9" stop-color="#1999D6"/><stop offset="1" stop-color="#26AAE1"/></radialGradient></defs><path d="M410 15c25 0 45 20 45 45s-20 45-45 45-45-20-45-45 20-45 45-45z" fill="#ffffff" opacity="0.0"/><circle cx="418" cy="46" r="30" fill="none"/></g></svg>
+  </header>
+
+  <section>
+    <h3 style="margin-top:0;">Scenario briefing</h3>
+    <div class="brief">
+      Two new wells are being planned in Jasmin Field. Before either spuds, your team needs to design
+      the borehole image acquisition programme for each &mdash; conveyance method and tool type &mdash;
+      weighing the geological objective against the drilling and mud constraints each well presents.
+      Get this wrong and you either can't run the tool at all, or run one that can't answer the question
+      it was acquired for.
+    </div>
+  </section>
+
+  <section>
+    <h3 style="margin-top:0;">Your asset team</h3>
+    <p style="font-size:14px;line-height:1.5;">
+      This is where your Frontier Exploration Asset Team comes together for the first time. Split these
+      five roles across your table &mdash; you'll carry them through the rest of the course's group
+      exercises as the same wells get drilled and interpreted.
+    </p>
+    <div class="team-grid">
+      <div class="team-role"><strong>Petrophysicist</strong><span>Specifies which measurements and tool types will answer the objective.</span></div>
+      <div class="team-role"><strong>Drilling Manager</strong><span>Flags what conveyance is actually feasible given mud type and trajectory.</span></div>
+      <div class="team-role"><strong>Geologist/Geophysicist</strong><span>Defines the geological objective driving the programme.</span></div>
+      <div class="team-role"><strong>Exploration Manager</strong><span>Weighs programme cost and risk against the project's goals.</span></div>
+      <div class="team-role"><strong>Geosteerer</strong><span>Considers what real-time data the well will need while drilling.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h3 style="margin-top:0;">Step 1 &mdash; Jasmin-1 (exploration appraisal well) <span class="role-tag">Petrophysicist's call, with Drilling Manager's constraints</span></h3>
+    <table class="welldata">
+      <tr><th>Trajectory</th><td>Vertical (max 5&deg; inclination)</td></tr>
+      <tr><th>Mud system</th><td>Water-based mud (WBM)</td></tr>
+      <tr><th>Primary objective</th><td>Structural dip determination and natural fracture identification for exploration risking</td></tr>
+      <tr><th>Programme constraint</th><td>Cost-conscious &mdash; this is a appraisal well, not a producer</td></tr>
+    </table>
+    <div class="choice-row">
+      <div class="choice-block">
+        <label for="w1conv">Conveyance</label>
+        <select id="w1conv">
+          <option value="">Select...</option>
+          <option value="wireline">Wireline (post-drill, pipe-conveyed run)</option>
+          <option value="lwd">LWD (while drilling)</option>
+        </select>
+      </div>
+      <div class="choice-block">
+        <label for="w1tool">Image tool type</label>
+        <select id="w1tool">
+          <option value="">Select...</option>
+          <option value="electrical">Electrical (resistivity) imager</option>
+          <option value="acoustic">Acoustic (ultrasonic) imager</option>
+        </select>
+      </div>
+    </div>
+    <label for="w1reason">Why this combination for Jasmin-1?</label>
+    <textarea id="w1reason" placeholder="Reference the mud system, trajectory, objective, and cost constraint..."></textarea>
+    <button id="checkW1Btn">Check Jasmin-1 programme</button>
+    <div class="feedback" id="w1Feedback"></div>
+  </section>
+
+  <section>
+    <h3 style="margin-top:0;">Step 2 &mdash; Jasmin-6 (high-angle producer) <span class="role-tag">Petrophysicist's call, with Drilling Manager's constraints</span></h3>
+    <table class="welldata">
+      <tr><th>Trajectory</th><td>High-angle, 68&deg; inclination through the reservoir section</td></tr>
+      <tr><th>Mud system</th><td>Oil-based mud (OBM) &mdash; required for shale section stability</td></tr>
+      <tr><th>Primary objective</th><td>Real-time geosteering and fracture-swarm avoidance while drilling</td></tr>
+      <tr><th>Programme constraint</th><td>Conventional wireline conveyance is unreliable above ~60&ndash;65&deg; without additional tractoring</td></tr>
+    </table>
+    <div class="choice-row">
+      <div class="choice-block">
+        <label for="w2conv">Conveyance</label>
+        <select id="w2conv">
+          <option value="">Select...</option>
+          <option value="wireline">Wireline (post-drill, pipe-conveyed run)</option>
+          <option value="lwd">LWD (while drilling)</option>
+        </select>
+      </div>
+      <div class="choice-block">
+        <label for="w2tool">Image tool type</label>
+        <select id="w2tool">
+          <option value="">Select...</option>
+          <option value="electrical">Electrical (resistivity) imager</option>
+          <option value="acoustic">Acoustic (ultrasonic) imager</option>
+        </select>
+      </div>
+    </div>
+    <label for="w2reason">Why this combination for Jasmin-6?</label>
+    <textarea id="w2reason" placeholder="Reference the mud system, trajectory, objective, and conveyance constraint..."></textarea>
+    <button id="checkW2Btn">Check Jasmin-6 programme</button>
+    <div class="feedback" id="w2Feedback"></div>
+  </section>
+
+  <section>
+    <h3 style="margin-top:0;">Step 3 &mdash; Present the programme <span class="role-tag">Exploration Manager presents</span></h3>
+    <p style="font-size:14px;">Summarise both wells' acquisition programmes and be ready to justify the contrast between them to the group.</p>
+    <label for="summary">Summary</label>
+    <textarea id="summary" style="min-height:100px;" placeholder="Jasmin-1: ... Jasmin-6: ... Why the two programmes differ..."></textarea>
+    <button id="checkAllBtn" class="gold">Check overall exercise</button>
+    <div class="feedback" id="overallFeedback"></div>
+  </section>
+
+  <footer>
+    PT-628 Borehole Imaging &middot; Jasmin Field is a synthetic training field. All data shown is
+    illustrative and generated for this exercise.
+  </footer>
+</div>
+
+<script>
+(function(){
+  function checkWell(convId, toolId, correctConv, correctTool, fbId, okText, closeTextParts){
+    const conv = document.getElementById(convId).value;
+    const tool = document.getElementById(toolId).value;
+    const fb = document.getElementById(fbId);
+    fb.className = 'feedback show';
+    if(!conv || !tool){
+      fb.className = 'feedback show no';
+      fb.textContent = 'Select both conveyance and tool type before checking.';
+      return;
+    }
+    const convOk = conv === correctConv;
+    const toolOk = tool === correctTool;
+    if(convOk && toolOk){
+      fb.className = 'feedback show ok';
+      fb.textContent = okText;
+    } else {
+      fb.className = 'feedback show close';
+      let msg = [];
+      if(!convOk) msg.push(closeTextParts.conv);
+      if(!toolOk) msg.push(closeTextParts.tool);
+      fb.textContent = msg.join(' ');
+    }
+  }
+
+  document.getElementById('checkW1Btn').addEventListener('click', function(){
+    checkWell('w1conv','w1tool','wireline','electrical','w1Feedback',
+      'Correct. Jasmin-1 is vertical, in WBM, and cost-conscious \u2014 a straightforward post-drill wireline run with a standard electrical (resistivity) imager gives the best resolution for structural dip and fracture work, at lower cost than LWD, with no conveyance risk at 5\u00b0 inclination.',
+      {
+        conv: 'LWD is unnecessary here \u2014 Jasmin-1 is vertical with no real-time drilling decision riding on the data, so a lower-cost post-drill wireline run is the more appropriate choice.',
+        tool: 'Electrical (resistivity) imagers need a conductive mud system to work \u2014 Jasmin-1 is in WBM, so electrical imaging is both feasible and gives the best resolution here; acoustic isn\'t needed unless the mud is non-conductive.'
+      });
+  });
+
+  document.getElementById('checkW2Btn').addEventListener('click', function(){
+    checkWell('w2conv','w2tool','lwd','acoustic','w2Feedback',
+      'Correct. Jasmin-6 is high-angle (68\u00b0) where wireline conveyance becomes unreliable without extra tractoring, and the geosteering objective needs data while drilling anyway \u2014 so LWD is the right conveyance. And since OBM is non-conductive, a standard electrical imager won\'t work; an acoustic (ultrasonic) imager reads through OBM regardless of mud conductivity.',
+      {
+        conv: 'At 68\u00b0 inclination, conventional wireline conveyance is unreliable, and the real-time geosteering objective needs the data while drilling \u2014 LWD is the better fit here, not wireline.',
+        tool: 'Jasmin-6 is in OBM, which is non-conductive \u2014 a standard electrical (resistivity) imager won\u2019t work. An acoustic (ultrasonic) imager reads through OBM regardless of mud conductivity.'
+      });
+  });
+
+  document.getElementById('checkAllBtn').addEventListener('click', function(){
+    const fb = document.getElementById('overallFeedback');
+    const summary = document.getElementById('summary').value.trim();
+    fb.className = 'feedback show';
+    const missing = [];
+    if(!document.getElementById('w1conv').value || !document.getElementById('w1tool').value) missing.push('a complete Jasmin-1 programme in Step 1');
+    if(!document.getElementById('w2conv').value || !document.getElementById('w2tool').value) missing.push('a complete Jasmin-6 programme in Step 2');
+    if(summary.length < 30) missing.push('a fuller written summary (at least a couple of sentences)');
+    if(missing.length){
+      fb.className = 'feedback show no';
+      fb.textContent = 'Before finishing, complete: ' + missing.join(', ') + '.';
+      return;
+    }
+    fb.className = 'feedback show ok';
+    fb.textContent = 'Exercise complete. Review your Step 1 and Step 2 feedback with your table, then be ready to present both programmes \u2014 and why they differ \u2014 to the group.';
+  });
+})();
+</script>
+</body>
+</html>
