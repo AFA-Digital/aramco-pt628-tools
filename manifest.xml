@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xsi:type="ContentApp">
+  <Id>1796443c-4602-4c85-95d8-9746b788922b</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>AFA Digital</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="PT628 Add-in Proof of Concept"/>
+  <Description DefaultValue="Test add-in to confirm interactive HTML content can run live inside a PowerPoint slide."/>
+  <IconUrl DefaultValue="https://afa-digital.github.io/aramco-pt628-tools/icon32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://afa-digital.github.io/aramco-pt628-tools/icon80.png"/>
+  <SupportUrl DefaultValue="https://afa-digital.github.io/aramco-pt628-tools/"/>
+  <Hosts>
+    <Host Name="Presentation"/>
+  </Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://afa-digital.github.io/aramco-pt628-tools/addin_poc.html"/>
+  </DefaultSettings>
+  <Permissions>Restricted</Permissions>
+</OfficeApp>
