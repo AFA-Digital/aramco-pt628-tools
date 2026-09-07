@@ -72,9 +72,9 @@
 <body>
 
 <h1>PT 628 - Borehole Imaging: Dip Sinusoid Unroll Tool</h1>
-<p class="subtitle">Module 1 - drag the slider to unroll the cylinder and watch the plane's trace become a sine wave. Adjust dip magnitude, azimuth, and fault throw to see how each changes the curve.</p>
+<p class="subtitle">Module 1 - drag the slider to unroll the cylinder and watch the plane's trace become a sine wave. Adjust dip magnitude and azimuth to see how each changes the curve.</p>
 
-<h2 class="sr-only">Interactive tool showing how a dipping plane's trace unrolls from a ring into a sine wave, with adjustable dip magnitude, azimuth, and fault throw, alongside the real course reference image of the borehole cylinder for comparison</h2>
+<h2 class="sr-only">Interactive tool showing how a dipping plane's trace unrolls from a ring into a sine wave, with adjustable dip magnitude and azimuth, alongside the real course reference image of the borehole cylinder for comparison</h2>
 <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
   <div style="flex:2;min-width:280px">
     <div style="display:flex;flex-direction:column;gap:14px">
@@ -84,7 +84,7 @@
         <input type="range" id="tSlider" min="0" max="100" value="0" step="1" style="flex:1" oninput="onScrub(this.value)">
         <label style="font-size:14px;color:var(--text-secondary);white-space:nowrap">Unrolled</label>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div>
           <label style="font-size:13px;color:var(--text-secondary)">Dip magnitude</label>
           <div style="display:flex;align-items:center;gap:8px">
@@ -99,17 +99,10 @@
             <span id="azOut" style="font-size:13px;min-width:32px">270deg</span>
           </div>
         </div>
-        <div>
-          <label style="font-size:13px;color:var(--text-secondary)">Fault throw</label>
-          <div style="display:flex;align-items:center;gap:8px">
-            <input type="range" id="throwSlider" min="0" max="60" value="0" step="1" style="flex:1" oninput="onParamChange()">
-            <span id="throwOut" style="font-size:13px;min-width:32px">0</span>
-          </div>
-        </div>
       </div>
       <svg width="100%" viewBox="0 0 680 380" role="img" id="mainSvg">
         <title>Borehole plane-intersection unroll animation</title>
-        <desc>Gold and pale-grey bands with smooth internal gradients representing a borehole image, built from many thin slices so the rolled state reads as a genuine cylinder, morphing into a flat unrolled panel; a red curve on the bands morphs from an elliptical ring into a sine wave, with black dot markers at each cardinal azimuth. Pressing play unrolls once and stops.</desc>
+        <desc>Gold and pale-blue bands with smooth internal gradients representing a borehole image, built from many thin slices so the rolled state reads as a genuine cylinder, morphing into a flat unrolled panel; a red curve on the bands morphs from an elliptical ring into a sine wave, with black dot markers at each cardinal azimuth. Pressing play unrolls once and stops.</desc>
         <defs>
           <linearGradient id="goldBandGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#FBF0A8"/>
@@ -117,10 +110,10 @@
             <stop offset="70%" stop-color="#5A9E7E"/>
             <stop offset="100%" stop-color="#0F6E64"/>
           </linearGradient>
-          <linearGradient id="greyBandGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#DCE4E4"/>
-            <stop offset="50%" stop-color="#CCD8D8"/>
-            <stop offset="100%" stop-color="#E6E9EA"/>
+          <linearGradient id="blueBandGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#CFEBFA"/>
+            <stop offset="50%" stop-color="#7CC9EC"/>
+            <stop offset="100%" stop-color="#1F9ED9"/>
           </linearGradient>
           <radialGradient id="shadowGrad" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#000000" stop-opacity="0.28"/>
@@ -130,7 +123,6 @@
         <ellipse id="shadowEllipse" fill="url(#shadowGrad)"/>
         <g id="stripeGroup"></g>
         <g id="dotGroup"></g>
-        <path id="traceLower" fill="none" stroke="#8a8a8a" stroke-width="1.5" stroke-dasharray="4 3"/>
         <path id="traceUpper" fill="none" stroke="#F20000" stroke-width="2.5"/>
         <g id="labelGroup"></g>
         <g id="troughMarker">
@@ -156,14 +148,13 @@ const rolledRect = {yTop:70, yBot:340};
 const unrolledRect = {x:50, y:150, w:580, h:180};
 const heightScale = 1.15;
 
-function computeH(thetaDeg, mag, az, throwAmt){
+function computeH(thetaDeg, mag, az){
   const rad = (thetaDeg - az) * Math.PI / 180;
   const amp = Math.tan(mag * Math.PI/180) * 46;
-  let h = amp * Math.cos(rad);
-  const faultAz = (az + 180) % 360;
-  let diff = ((thetaDeg - faultAz) % 360 + 360) % 360;
-  if (diff < 180) h += throwAmt;
-  return h;
+  // Negative cosine so the deepest point of the sinusoid (the trough) lands
+  // exactly at the dip azimuth, matching standard convention: the trough
+  // position on an unrolled image IS the dip azimuth.
+  return -amp * Math.cos(rad);
 }
 
 function rolledXY(thetaDeg, depthFrac){
@@ -183,18 +174,18 @@ function ptAt(thetaDeg, depthFrac, t){
   const [ux,uy] = unrolledXY(thetaDeg, depthFrac);
   return [lerp(rx,ux,t), lerp(ry,uy,t)];
 }
-function tracePointXY(thetaDeg, t, mag, az, throwAmt){
+function tracePointXY(thetaDeg, t, mag, az){
   const [rx,ry0] = rolledXY(thetaDeg, 0.5);
   const [ux,uy0] = unrolledXY(thetaDeg, 0.5);
-  const h = computeH(thetaDeg, mag, az, throwAmt) * heightScale;
+  const h = computeH(thetaDeg, mag, az) * heightScale;
   const ry = ry0 - h, uy = uy0 - h;
   return [lerp(rx,ux,t), lerp(ry,uy,t)];
 }
-function buildTracePath(t, mag, az, throwAmt){
+function buildTracePath(t, mag, az){
   let d = '';
   for (let i=0;i<=N;i++){
     const theta = (i/N)*360;
-    const [x,y] = tracePointXY(theta, t, mag, az, throwAmt);
+    const [x,y] = tracePointXY(theta, t, mag, az);
     d += (i===0? 'M':'L') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
   }
   return d;
@@ -202,7 +193,7 @@ function buildTracePath(t, mag, az, throwAmt){
 function colorForTheta(theta){
   const norm = ((theta % 360) + 360) % 360;
   const quadrant = Math.floor(norm/90) % 2;
-  return quadrant === 0 ? 'goldBandGrad' : 'greyBandGrad';
+  return quadrant === 0 ? 'goldBandGrad' : 'blueBandGrad';
 }
 function buildStripes(t){
   const g = document.getElementById('stripeGroup');
@@ -217,11 +208,11 @@ function buildStripes(t){
     g.appendChild(poly);
   }
 }
-function buildDots(t, mag, az, throwAmt){
+function buildDots(t, mag, az){
   const g = document.getElementById('dotGroup');
   g.innerHTML = '';
   [0,90,180,270,360].forEach(theta=>{
-    const [x,y] = tracePointXY(theta, t, mag, az, throwAmt);
+    const [x,y] = tracePointXY(theta, t, mag, az);
     const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
     dot.setAttribute('cx', x.toFixed(1));
     dot.setAttribute('cy', y.toFixed(1));
@@ -235,8 +226,11 @@ function updateLabels(t){
   g.innerHTML = '';
   const marks = [[0,'N'],[90,'E'],[180,'S'],[270,'W'],[360,'N']];
   marks.forEach(([theta,name])=>{
-    const [rx] = rolledXY(theta, 0);
-    const ry = 40;
+    const rad = theta * Math.PI/180;
+    const rx = cx + ellR * Math.sin(rad);
+    const frontness = Math.cos(rad); // +1 = nearest face (N), -1 = farthest face (S) - keeps them apart
+    const ry0 = rolledRect.yTop + ellSquashY * frontness;
+    const ry = ry0 - 16 * (frontness >= 0 ? 1 : -1);
     const ux = unrolledRect.x + (theta/360)*unrolledRect.w;
     const uy = unrolledRect.y - 12;
     const x = lerp(rx,ux,t), y = lerp(ry,uy,t);
@@ -252,11 +246,9 @@ function renderUnroll(){
   const t = document.getElementById('tSlider').value/100;
   const mag = +document.getElementById('magSlider').value;
   const az = +document.getElementById('azSlider').value;
-  const throwAmt = +document.getElementById('throwSlider').value;
 
   document.getElementById('magOut').textContent = mag+'deg';
   document.getElementById('azOut').textContent = az+'deg';
-  document.getElementById('throwOut').textContent = throwAmt;
 
   const shadow = document.getElementById('shadowEllipse');
   const shadowCx = lerp(cx, unrolledRect.x+unrolledRect.w/2, t);
@@ -269,18 +261,15 @@ function renderUnroll(){
   shadow.setAttribute('ry', shadowRy.toFixed(1));
 
   buildStripes(t);
-  buildDots(t, mag, az, throwAmt);
+  buildDots(t, mag, az);
 
-  const dLower = buildTracePath(t, mag, az, 0);
-  const dUpper = buildTracePath(t, mag, az, throwAmt);
-  document.getElementById('traceLower').setAttribute('d', throwAmt>0 ? dLower : '');
-  document.getElementById('traceUpper').setAttribute('d', dUpper);
+  document.getElementById('traceUpper').setAttribute('d', buildTracePath(t, mag, az));
 
   updateLabels(t);
 
   const trough = document.getElementById('troughMarker');
-  if (t > 0.55 && throwAmt === 0){
-    const [tx,ty] = tracePointXY((az+180)%360, t, mag, az, 0);
+  if (t > 0.55){
+    const [tx,ty] = tracePointXY(az, t, mag, az);
     const opacity = Math.min(1,(t-0.55)/0.3);
     trough.style.opacity = opacity;
     document.getElementById('troughLine').setAttribute('x1', tx.toFixed(1));
@@ -296,9 +285,7 @@ function renderUnroll(){
   }
 
   const cap = document.getElementById('caption');
-  if (throwAmt > 0){
-    cap.textContent = 'A fault offsets the same bed: unrolled, the sinusoid jumps by the throw amount at one azimuth instead of staying continuous.';
-  } else if (t < 0.15){
+  if (t < 0.15){
     cap.textContent = 'Rolled up: the plane cuts the cylinder as a tilted ring. Flatter tilt = smaller ring wobble.';
   } else if (t > 0.85){
     cap.textContent = 'Unrolled: the same ring becomes a sine wave. Wave height = dip magnitude, trough position = dip azimuth.';
