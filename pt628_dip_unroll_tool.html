@@ -102,18 +102,15 @@
       </div>
       <svg width="100%" viewBox="0 0 680 380" role="img" id="mainSvg">
         <title>Borehole plane-intersection unroll animation</title>
-        <desc>Gold and pale-blue bands with smooth internal gradients representing a borehole image, built from many thin slices so the rolled state reads as a genuine cylinder, morphing into a flat unrolled panel; a red curve on the bands morphs from an elliptical ring into a sine wave, with black dot markers at each cardinal azimuth. Pressing play unrolls once and stops.</desc>
+        <desc>A borehole image built from many thin azimuthal slices, each split into a yellow upper bed and a green lower bed along the boundary between them; that boundary is flat all the way round when the bed is horizontal and traces a sine wave as dip is applied. The rolled state reads as a genuine cylinder, morphing into a flat unrolled panel; a red curve traces the same bed boundary, with black dot markers at each cardinal azimuth. Pressing play unrolls once and stops.</desc>
         <defs>
-          <linearGradient id="goldBandGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#FBF0A8"/>
-            <stop offset="35%" stop-color="#F7E955"/>
-            <stop offset="70%" stop-color="#5A9E7E"/>
-            <stop offset="100%" stop-color="#0F6E64"/>
+          <linearGradient id="yellowBandGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FCEEA0"/>
+            <stop offset="100%" stop-color="#F2CA3D"/>
           </linearGradient>
-          <linearGradient id="blueBandGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#CFEBFA"/>
-            <stop offset="50%" stop-color="#7CC9EC"/>
-            <stop offset="100%" stop-color="#1F9ED9"/>
+          <linearGradient id="greenBandGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6FAE87"/>
+            <stop offset="100%" stop-color="#12695C"/>
           </linearGradient>
           <radialGradient id="shadowGrad" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#000000" stop-opacity="0.28"/>
@@ -190,22 +187,29 @@ function buildTracePath(t, mag, az){
   }
   return d;
 }
-function colorForTheta(theta){
-  const norm = ((theta % 360) + 360) % 360;
-  const quadrant = Math.floor(norm/90) % 2;
-  return quadrant === 0 ? 'goldBandGrad' : 'blueBandGrad';
-}
-function buildStripes(t){
+function buildStripes(t, mag, az){
   const g = document.getElementById('stripeGroup');
   g.innerHTML = '';
   for (let i=0;i<N;i++){
     const a0 = (i/N)*360, a1 = ((i+1)/N)*360;
     const [x0t,y0t] = ptAt(a0, 0, t), [x1t,y1t] = ptAt(a1, 0, t);
     const [x1b,y1b] = ptAt(a1, 1, t), [x0b,y0b] = ptAt(a0, 1, t);
-    const poly = document.createElementNS('http://www.w3.org/2000/svg','polygon');
-    poly.setAttribute('points', `${x0t.toFixed(1)},${y0t.toFixed(1)} ${x1t.toFixed(1)},${y1t.toFixed(1)} ${x1b.toFixed(1)},${y1b.toFixed(1)} ${x0b.toFixed(1)},${y0b.toFixed(1)}`);
-    poly.setAttribute('fill', 'url(#'+colorForTheta((a0+a1)/2)+')');
-    g.appendChild(poly);
+    // The bed boundary at this slice's two edges - same geometry the red
+    // trace curve uses, so the colour split always sits exactly on the
+    // sinusoid: flat all the way round at 0 dip, tilting into the sine
+    // wave as dip magnitude/azimuth change.
+    const [x0m,y0m] = tracePointXY(a0, t, mag, az);
+    const [x1m,y1m] = tracePointXY(a1, t, mag, az);
+
+    const upper = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    upper.setAttribute('points', `${x0t.toFixed(1)},${y0t.toFixed(1)} ${x1t.toFixed(1)},${y1t.toFixed(1)} ${x1m.toFixed(1)},${y1m.toFixed(1)} ${x0m.toFixed(1)},${y0m.toFixed(1)}`);
+    upper.setAttribute('fill', 'url(#yellowBandGrad)');
+    g.appendChild(upper);
+
+    const lower = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    lower.setAttribute('points', `${x0m.toFixed(1)},${y0m.toFixed(1)} ${x1m.toFixed(1)},${y1m.toFixed(1)} ${x1b.toFixed(1)},${y1b.toFixed(1)} ${x0b.toFixed(1)},${y0b.toFixed(1)}`);
+    lower.setAttribute('fill', 'url(#greenBandGrad)');
+    g.appendChild(lower);
   }
 }
 function buildDots(t, mag, az){
@@ -260,7 +264,7 @@ function renderUnroll(){
   shadow.setAttribute('rx', shadowRx.toFixed(1));
   shadow.setAttribute('ry', shadowRy.toFixed(1));
 
-  buildStripes(t);
+  buildStripes(t, mag, az);
   buildDots(t, mag, az);
 
   document.getElementById('traceUpper').setAttribute('d', buildTracePath(t, mag, az));
