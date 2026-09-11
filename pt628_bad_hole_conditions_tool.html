@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PT 628 - Bad Hole Conditions Tool</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css">
+<style>
+  :root {
+    --text-primary: #2c2c2a;
+    --text-secondary: #5f5e5a;
+    --text-muted: #888780;
+    --text-accent: #185fa5;
+    --border: #d3d1c7;
+    --surface-1: #f1efe8;
+    --surface-2: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-primary);
+    background: #fafaf8;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px 60px;
+    line-height: 1.5;
+  }
+  h1 { font-size: 20px; font-weight: 600; margin: 0 0 4px; }
+  .subtitle { color: var(--text-secondary); font-size: 14px; margin: 0 0 28px; }
+  button {
+    font-family: inherit;
+    font-size: 14px;
+    padding: 9px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    cursor: pointer;
+    color: var(--text-primary);
+  }
+  button:hover { background: var(--surface-1); }
+  button.active {
+    background: var(--text-accent);
+    border-color: var(--text-accent);
+    color: #fff;
+  }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  .state-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+  .badge.good { background: #e3f2e1; color: #1b5e20; }
+  .badge.fair { background: #fff3d6; color: #8a6a00; }
+  .badge.poor { background: #fbe6e3; color: #a32d2d; }
+  .legend { display: flex; gap: 18px; font-size: 12.5px; color: var(--text-secondary); margin-top: 10px; flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .caption-box {
+    background: var(--surface-1);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    color: var(--text-primary);
+    margin-top: 14px;
+  }
+  .caption-box .cond-name { font-weight: 600; margin-bottom: 4px; }
+  footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+
+<h1>PT 628 - Borehole Imaging: Bad Hole Conditions</h1>
+<p class="subtitle">Module 3 - select a borehole condition to see how it affects pad contact, and why that matters for image quality.</p>
+
+<h2 class="sr-only">Interactive tool showing six borehole cross-section conditions - good hole, washout, breakout, rugose hole, cavings/sloughing, and poor pad contact - and how each affects the sonde pads' contact with the formation</h2>
+
+<div class="state-grid" id="stateGrid"></div>
+
+<svg width="100%" viewBox="0 0 420 420" role="img" id="mainSvg" style="max-width:360px;display:block;margin:0 auto;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;">
+  <title>Borehole cross-section condition diagram</title>
+  <desc>A circular borehole cross-section with four sonde pads shown at north, east, south and west, and the formation wall drawn around them. The wall shape and pad contact change depending on the selected borehole condition: enlarged and irregular for washout, with two opposite red compressional failure zones for breakout, jagged for rugose hole, with loose rock fragments for cavings, or with the tool assembly offset from centre for poor pad contact.</desc>
+  <g id="formationGroup"></g>
+  <g id="breakoutGroup"></g>
+  <g id="cavingsGroup"></g>
+  <g id="padGroup"></g>
+  <circle id="toolCircle" r="26" fill="#4a4a48"/>
+</svg>
+
+<div class="legend">
+  <span><span class="swatch" style="background:#D8B888;"></span> Formation</span>
+  <span><span class="swatch" style="background:#F2C94C;"></span> Pad (sonde pad)</span>
+  <span><span class="swatch" style="background:#C0533E;"></span> Breakout (compressional failure)</span>
+  <span><span class="swatch" style="background:#8a7256;"></span> Cavings / loose fragments</span>
+</div>
+
+<div class="caption-box">
+  <div class="cond-name" id="condName"></div>
+  <div id="condText"></div>
+  <div style="margin-top:8px;">Pad contact: <span class="badge" id="contactBadge"></span></div>
+</div>
+
+<footer>
+  Saudi Aramco - PT 628 Borehole Imaging - Company General Use
+</footer>
+
+<script>
+const cx = 210, cy = 210, R = 130;
+
+const conditions = [
+  {
+    id: 'good', label: 'Good Hole (Reference)',
+    text: 'A near-gauge, circular borehole. All four pads sit flush against the formation wall, giving reliable, high-resolution contact across the full image.',
+    contact: 'good'
+  },
+  {
+    id: 'washout', label: 'Washout / Enlarged Borehole',
+    text: 'The hole has enlarged beyond gauge, often in reactive shale. Pads can no longer reach the wall, so contact is lost or patchy and the image softens or drops out entirely in the enlarged interval.',
+    contact: 'poor'
+  },
+  {
+    id: 'breakout', label: 'Borehole Breakout',
+    text: 'Stress-induced compressional failure creates two elongated enlargement zones roughly opposite each other, aligned with minimum horizontal stress. Pads crossing these zones lose contact, while pads at the unaffected azimuths stay in reasonable contact.',
+    contact: 'fair'
+  },
+  {
+    id: 'rugose', label: 'Rugose Hole',
+    text: 'A high-irregularity wall surface, often from interbedded lithologies of differing strength. Pad contact varies rapidly around and along the hole, producing a noisy, inconsistent image even though the hole is not grossly enlarged.',
+    contact: 'fair'
+  },
+  {
+    id: 'cavings', label: 'Cavings / Sloughing',
+    text: 'Loose rock fragments have fallen from the wall into the annulus. These can wedge behind a pad, locally forcing it off the true wall and creating a false, non-geological feature on the image.',
+    contact: 'poor'
+  },
+  {
+    id: 'decentred', label: 'Poor Pad Contact / Tool Decentred',
+    text: 'The tool string itself is off-centre in the borehole, rather than the hole shape being abnormal. One side of pads press hard against the wall while the opposite side loses contact entirely, biasing the image asymmetrically.',
+    contact: 'poor'
+  }
+];
+
+let current = 'good';
+
+function el(tag, attrs){
+  const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+
+function radiusForTheta(state, thetaDeg){
+  const rad = thetaDeg * Math.PI/180;
+  if (state === 'washout'){
+    return R * (1.22 + 0.05*Math.sin(3*rad) + 0.03*Math.sin(5*rad+1));
+  }
+  if (state === 'rugose'){
+    return R * (1.02 + 0.08*Math.sin(9*rad) + 0.045*Math.sin(17*rad+1.3) + 0.03*Math.sin(23*rad+0.4));
+  }
+  if (state === 'breakout'){
+    const bump = breakoutBump(thetaDeg);
+    return R * (1.0 + bump*0.55);
+  }
+  return R; // good, cavings, decentred all use a normal circular wall
+}
+
+function breakoutBump(thetaDeg){
+  // two opposite lobes centred at 90 (E) and 270 (W), ~55deg wide, smooth falloff
+  const centres = [90, 270];
+  let maxBump = 0;
+  centres.forEach(c=>{
+    let diff = Math.abs(((thetaDeg - c + 540) % 360) - 180) === 180 ? 0 : ((thetaDeg - c + 180) % 360) - 180;
+    diff = Math.abs(diff);
+    const halfWidth = 32;
+    if (diff < halfWidth){
+      const bump = Math.cos((diff/halfWidth) * Math.PI/2);
+      if (bump > maxBump) maxBump = bump;
+    }
+  });
+  return maxBump;
+}
+
+function isBreakoutZone(thetaDeg){
+  return breakoutBump(thetaDeg) > 0.15;
+}
+
+function buildWallPath(state){
+  const N = 180;
+  let d = '';
+  for (let i=0;i<=N;i++){
+    const theta = (i/N)*360;
+    const r = radiusForTheta(state, theta);
+    const rad = theta*Math.PI/180;
+    const x = cx + r*Math.sin(rad);
+    const y = cy - r*Math.cos(rad);
+    d += (i===0?'M':'L') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+  }
+  return d + 'Z';
+}
+
+function render(state){
+  const fGroup = document.getElementById('formationGroup');
+  const bGroup = document.getElementById('breakoutGroup');
+  const cGroup = document.getElementById('cavingsGroup');
+  const padGroup = document.getElementById('padGroup');
+  const toolCircle = document.getElementById('toolCircle');
+  fGroup.innerHTML = '';
+  bGroup.innerHTML = '';
+  cGroup.innerHTML = '';
+  padGroup.innerHTML = '';
+
+  // formation wall
+  const wall = el('path', {d: buildWallPath(state), fill:'#D8B888', stroke:'#a9895f', 'stroke-width':1.5});
+  fGroup.appendChild(wall);
+
+  // breakout red zones drawn as a masked overlay along the enlarged wall
+  if (state === 'breakout'){
+    for (let i=0;i<180;i++){
+      const theta = (i/180)*360;
+      if (isBreakoutZone(theta)){
+        const r0 = R;
+        const r1 = radiusForTheta('breakout', theta);
+        const rad = theta*Math.PI/180;
+        const rad2 = ((i+1)/180*360)*Math.PI/180;
+        const theta2 = ((i+1)/180)*360;
+        const r1b = radiusForTheta('breakout', theta2);
+        const x0 = cx + r0*Math.sin(rad), y0 = cy - r0*Math.cos(rad);
+        const x1 = cx + r1*Math.sin(rad), y1 = cy - r1*Math.cos(rad);
+        const x1b = cx + r1b*Math.sin(rad2), y1b = cy - r1b*Math.cos(rad2);
+        const x0b = cx + r0*Math.sin(rad2), y0b = cy - r0*Math.cos(rad2);
+        const poly = el('polygon', {points:`${x0.toFixed(1)},${y0.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)} ${x1b.toFixed(1)},${y1b.toFixed(1)} ${x0b.toFixed(1)},${y0b.toFixed(1)}`, fill:'#C0533E'});
+        bGroup.appendChild(poly);
+      }
+    }
+  }
+
+  // cavings: a couple of loose fragment blobs inside the annulus
+  if (state === 'cavings'){
+    const blobs = [[58,-18,10],[46,26,8],[-30,52,7]];
+    blobs.forEach(([dx,dy,r])=>{
+      cGroup.appendChild(el('circle',{cx:(cx+dx).toFixed(1), cy:(cy+dy).toFixed(1), r:r, fill:'#8a7256'}));
+    });
+  }
+
+  // pads + tool: offset the whole assembly for the decentred condition
+  const offsetX = state === 'decentred' ? 34 : 0;
+  const offsetY = state === 'decentred' ? -10 : 0;
+  const padReach = 60; // distance from tool centre to pad outer edge in the good-contact case
+
+  toolCircle.setAttribute('cx', cx+offsetX);
+  toolCircle.setAttribute('cy', cy+offsetY);
+
+  [0,90,180,270].forEach(theta=>{
+    const rad = theta*Math.PI/180;
+    const wallR = radiusForTheta(state, theta);
+    // pad reaches outward from the tool until it hits the wall, or its max extension
+    const maxReach = state === 'washout' || state === 'rugose' && wallR > R*1.05 ? padReach : padReach;
+    const reach = Math.min(wallR - 4, padReach + 34); // don't poke through the wall
+    const px = cx + offsetX + reach*Math.sin(rad);
+    const py = cy + offsetY - reach*Math.cos(rad);
+    const w = (theta===0||theta===180) ? 30 : 14;
+    const h = (theta===0||theta===180) ? 14 : 30;
+    padGroup.appendChild(el('rect', {
+      x:(px-w/2).toFixed(1), y:(py-h/2).toFixed(1), width:w, height:h, rx:3,
+      fill:'#F2C94C', stroke:'#b98f1f', 'stroke-width':1
+    }));
+  });
+
+  // caption + buttons
+  const cond = conditions.find(c=>c.id===state);
+  document.getElementById('condName').textContent = cond.label;
+  document.getElementById('condText').textContent = cond.text;
+  const badge = document.getElementById('contactBadge');
+  badge.className = 'badge ' + cond.contact;
+  badge.textContent = cond.contact.charAt(0).toUpperCase() + cond.contact.slice(1);
+
+  document.querySelectorAll('.state-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.state === state);
+  });
+}
+
+const grid = document.getElementById('stateGrid');
+conditions.forEach(cond=>{
+  const btn = document.createElement('button');
+  btn.className = 'state-btn';
+  btn.dataset.state = cond.id;
+  btn.textContent = cond.label;
+  btn.addEventListener('click', ()=>{ current = cond.id; render(current); });
+  grid.appendChild(btn);
+});
+
+render(current);
+</script>
+
+</body>
+</html>
